@@ -1,0 +1,72 @@
+
+Chtěl jsem si na 3D tiskárně vytvořit logo, dvoubarevné, a k dispozici jsem měl jenom 3D tiskárnu Průša Mini, která má jen jeden extruder. 
+Jak vytisknout něco, kde chceme dvoubarevný nebo tříbarevný tisk?
+
+Před návodem, který vám v následující části popíšu, vás musím seznámit co bylo mým cílem, kde je nutné udělat ústupky a jak jsem to vlastně navrhl. 
+<H3>Co jsem potřeboval:</H3>
+- Vytisknout dvoubarevné logo na 3D tiskárně s jedním extruderem
+- První část tisku (první barva) mi stačila pouze v první vrstvě, zbytek výtisku jsem vytiskl druhou barvou, tzn. zbytek první vrstvy a vrstvy následující.
+<H3>Co jsem měl k dispozici:</H3>
+- 3D tiskárnu Průša Mini s jedním extruderem
+- Logo v PNG
+- Online 3D CAD Tinkercad
+- Průša Slicer
+- Dva různěbarevné filamenty, ale stejný materiál
+
+Abych mohl logo ve formátu PNG naimportovat do Tinkercad, musel jej převést do formátu SVG (vektorová grafika).
+K tomu jsem využil online službu Convertio.co, která je dostupná na <a href='https://convertio.co/png-svg/' target='_blank'>https://convertio.co/png-svg/</a>.
+
+
+V Tinkercad jsem naimportoval SVG soubor a upravil velikost.
+
+
+Níže vidíte naimportované logo (otočil jsem ho o 180° - aby se tisklo na podložku, tzn. v první vrstvě). 
+První vrstvu jsem vytiskl 0.2mm, to znamená, že text musí být 0.2mm vysoký (pokud bych chtěl jenom jednou měnit filament). Pokud bych chtěl tisknout 0.1mm (a stačí jenom 1 vrstva), pak musí být výška 0.1mm.
+Pokud budu tisknout 0.1mm a velikost bude třeba 0.4mm, budu muset 7x měnit filament.
+
+
+Ten samý objekt musí být jako těleso a zároveň jsem jej zkopíroval a označil jako otvor/díra.
+Vzal jsem model označený jako díra a umístil do spodní strany objektu - kvádru (nebo jej umístíte ze shora a ve sliceru otočíte - to je na vás).
+
+
+Po umístění jsem <strong>sloučil </strong>objekt kvádru a logo - díry.
+
+
+Vza logo jako objekt a umístil jej na úplně stejné místo jako je díra. Objekty se musí přesně překrývat. 
+Oba objekty (samotné logo a kvádr s dírou pro logo) <strong>nesmíte sloučit</strong>.
+
+
+Označil jeden objekt (kvádr s dírou pro logo) a vyexportoval do STL.
+Označil druhý objekt (objekt logo) a vyexportoval do STL.
+
+Spustil Průša Slicer (používám 2.3.3) a upravil nastavení tiskárny.
+V záložce Printer Setting (nastavení  tiskárny) záložce Možnosti (Capabilities) <strong>jsem nastavil 2 extrudery</strong> (pokud chci dvě barvy), pokud tři tak tři. A <strong>povolil "Single extruder multi material"</strong>.
+
+
+Ve složce, kde mám oba STL soubory, jsem oba označil a přetáhl do Průša Sliceru.
+Vyskočilo toto okno - klikl jsem na YES.
+
+Každý z objektů by měl mít nastaven vlastní extruder (barvu). Viz. obrázek.
+
+
+Opět v záložce <strong>Printer Setting (Nastavení tiskárny)</strong>, jsem našel <strong>Custom G-code</strong>, kam jsem zadal do pole <strong>Tool change G-code M600</strong> - tento G code znamená výměnu filamentu. 
+
+
+A naslicovat model. 
+
+
+Ve sliceru uvidíte, co se jakou barvou bude tisknout. Pokud něco nesouhlasí, můžete to před vygenerováním upravit a znova naslicovat.
+
+Vygenerovaný soubor můžete otevřít a zkontrolovat, zda jsou v datech opravdu kódy M600 pro výměnu extruderu.
+
+
+Takhle vypadá tisk loga. Po vyčištění loga bílou vyměním filament (filament se automaticky vysune díky kódu M600) a zbytek objektu bude tisknutý transparentním filamentem.
+
+
+A takhle může vypadat výsledek.
+
+
+<H3>Suma sumárum:</H3>
+- I s jednoduchou tiskárnou můžeme vytisknout výtisk, který má dvě nebo třeba i tři barvy.
+- Barevné filamenty by měly mít stejné nebo alespoň podobné vlastnosti.
+- Pokud vám nestačí tisk jenom v první vrstvě, budete muset před každou další vrstvou muset vyměnit filament. Vysunutí filamentu je automatické - díky kódu M600.
